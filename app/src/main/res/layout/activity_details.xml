@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:padding="5dp"
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="料理名: ○○○○○"
+        android:textSize="30dp"
+        android:gravity="left"
+        />
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="360dp"
+        android:layout_height="194dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_view"
+        android:src="@drawable/placeholder_img2"
+        />
+    <TextView
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:id="@+id/description_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view"
+        android:text="詳細説明\n○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○"
+        />
+    <TextView
+        android:paddingTop="20dp"
+        android:paddingLeft="5dp"
+        android:id="@+id/username_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description_view"
+        android:text="届先: ○○○○○"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:paddingTop="20dp"
+        android:paddingLeft="5dp"
+        android:id="@+id/useraddress_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username_view"
+        android:text="投稿者: ○○○○○"
+        android:textSize="20dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
