@@ -30,7 +30,7 @@ class AppGlideModule : AppGlideModule(){
     }
 }
 
-class FoodsAdapter(private val context: Context, private val foodList: List<FoodDeliveryData>) : RecyclerView.Adapter<FoodsAdapter.FoodsHolder>() {
+class FoodsAdapter(private val context: Context, private val foodMap: Map<String, FoodDeliveryData>) : RecyclerView.Adapter<FoodsAdapter.FoodsHolder>() {
 
     private val strage: FirebaseStorage = Firebase.storage
 
@@ -47,23 +47,24 @@ class FoodsAdapter(private val context: Context, private val foodList: List<Food
         return FoodsHolder(item)
     }
 
-    override fun getItemCount(): Int = foodList.size
+    override fun getItemCount(): Int = foodMap.size
 
     override fun onBindViewHolder(holder: FoodsHolder, position: Int) {
-        val imageRef = strage.getReference(foodList[position].imagePath.toString())
+        val key = ArrayList(foodMap.keys)[position]
+        val imageRef = strage.getReference(foodMap[key]!!.imagePath.toString())
         imageRef.downloadUrl.addOnSuccessListener { uri ->
             Glide.with(context)
                     .load(uri.toString())
                     .into(holder.foodImageView)
         }
-        holder.foodTitleView.text = foodList[position].title
+        holder.foodTitleView.text = foodMap[key]!!.title
         holder.itemView.setOnClickListener {
-            listener.onItemClickListener(it, position, foodList[position])
+            listener.onItemClickListener(it, position, foodMap[key]!!, key)
         }
     }
 
     interface OnItemClickListener{
-        fun onItemClickListener(view: View, position: Int, food: FoodDeliveryData)
+        fun onItemClickListener(view: View, position: Int, food: FoodDeliveryData, foodKey: String)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener){
@@ -84,16 +85,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         val foodDelivery = FoodDeliveryDatabaseController()
-        foodDelivery.download { foodList: List<FoodDeliveryData> ->
+        foodDelivery.download { foodList: Map<String, FoodDeliveryData> ->
             findViewById<RecyclerView>(R.id.recyclerView).also { recyclerView: RecyclerView ->
                 val adapter = FoodsAdapter(this, foodList)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(this)
                 adapter.setOnItemClickListener(
                         object: FoodsAdapter.OnItemClickListener {
-                            override fun onItemClickListener(view: View, position: Int, food: FoodDeliveryData) {
+                            override fun onItemClickListener(view: View, position: Int, food: FoodDeliveryData, foodKey: String) {
                                 Log.d("DEMO", food.title.toString())
                                 val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+                                intent.putExtra("foodKey", foodKey)
                                 intent.putExtra("title", food.title)
                                 intent.putExtra("imagePath", food.imagePath)
                                 intent.putExtra("description", food.description)
@@ -107,5 +109,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
 }

@@ -45,19 +45,19 @@ class FoodDeliveryDatabaseController(refName: String = "foods") {
         foodsRef.updateChildren(childUpdates)
     }
 
-    fun download(onChange: (List<FoodDeliveryData>) -> Unit) {
+    fun download(onChange: (Map<String, FoodDeliveryData>) -> Unit) {
         foodsRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val childrens = dataSnapshot.children
-                val foodDeliveryDatas = mutableListOf<FoodDeliveryData>()
+                val foodDeliveryDatas = mutableMapOf<String, FoodDeliveryData>()
                 for (child in childrens) {
-                    foodDeliveryDatas.add( FoodDeliveryData(
+                    foodDeliveryDatas[child.key.toString()] = FoodDeliveryData(
                             child.child("title").value as String?,
                             child.child("imagePath").value as String?,
                             child.child("description").value as String?,
                             child.child("userName").value as String?,
                             child.child("userAddress").value as String?
-                    ) )
+                    )
                 }
                 onChange(foodDeliveryDatas)
             }

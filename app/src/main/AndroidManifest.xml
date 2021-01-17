@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodApp">
-        <activity android:name=".MainActivity" android:label="お裾分け一覧">
+        <activity android:name=".MainActivity" android:label="お裾分けアプリ">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
